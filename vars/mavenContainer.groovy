@@ -7,8 +7,8 @@ final static defaultContainerName = 'maven'
  * Usage:
  *
  * mavenContainer()
- *
- * mavenContainer { name: 'xyz' }
+ * mavenContainer { name: 'abc' }
+ * mavenContainer { name: 'abc', image: 'xyz' }
  */
 def call(Map parameters = [:], body) {
 
