@@ -4,8 +4,8 @@
  * Usage:
  *
  * mavenContainer {}
- * mavenContainer { name: 'abc' }
- * mavenContainer { name: 'abc', image: 'xyz' }
+ * mavenContainer(name: 'abc') {}
+ * mavenContainer(name: 'abc', image: 'xyz') {}
  */
 def call(Map parameters = [:], body) {
 
