@@ -13,16 +13,11 @@ package net.talldave.pipeline
  * mavenContainer(image: 'xyz')
  * mavenContainer(name: 'abc', image: 'xyz')
  */
-def mavenContainer(String name = Defaults.mavenContainerName,
-                   String image = Defaults.mavenContainerImage) {
-    echo "creating Maven container with name [$name] and image [$image]"
-    containerTemplate(
-        name: name,
-        image: image,
-        command: '/bin/sh -c',
-        args: 'cat',
-        ttyEnabled: true,
-        envVars: [
+def mavenContainer(args) {
+    createContainer(
+        args?.name ?: Defaults.mavenContainerName,
+        args?.image ?: Defaults.mavenContainerImage,
+        [
             containerEnvVar(
                 key: 'MAVEN_OPTS',
                 value: '-Duser.home=/root/')
@@ -41,10 +36,10 @@ def mavenContainer(String name = Defaults.mavenContainerName,
  * pythonContainer(image: 'xyz')
  * pythonContainer(name: 'abc', image: 'xyz')
  */
-def pythonContainer(String name = Defaults.pythonContainerName,
-                   String image = Defaults.pythonContainerImage) {
-    echo "creating Python container with name [$name] and image [$image]"
-    genericContainer(name, image)
+def pythonContainer(args) {
+    genericContainer(
+        args?.name ?: Defaults.pythonContainerName,
+        args?.image ?: Defaults.pythonContainerImage)
 }
 
 
@@ -58,20 +53,22 @@ def pythonContainer(String name = Defaults.pythonContainerName,
  * kubectlContainer(image: 'xyz')
  * kubectlContainer(name: 'abc', image: 'xyz')
  */
-def kubectlContainer(String name = Defaults.kubectlContainerName,
-                   String image = Defaults.kubectlContainerIamge) {
-    echo "creating Kubectl container with name [$name] and image [$image]"
-    genericContainer(name, image)
+def kubectlContainer(args) {
+    genericContainer(
+        args?.name ?: Defaults.kubectlContainerName,
+        args?.image ?: Defaults.kubectlContainerImage)
 }
 
 
 // utility method to DRY out container templates
-def genericContainer(String name, String image) {
+def createContainer(String name, String image, List envVars = []) {
+    echo "creating container with name [$name] and image [$image]"
     containerTemplate(
         name: name,
         image: image,
         command: '/bin/sh -c',
         args: 'cat',
-        ttyEnabled: true
+        ttyEnabled: true,
+        envVars: envVars
     )
 }
