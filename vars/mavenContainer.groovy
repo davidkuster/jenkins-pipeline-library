@@ -1,16 +1,16 @@
-final static defaultMavenImage = 'fabric8/maven-builder:2.2.331'
-final static defaultContainerName = 'maven'
-
 /**
  * Creates a Maven container.
  *
  * Usage:
  *
- * mavenContainer()
+ * mavenContainer {}
  * mavenContainer { name: 'abc' }
  * mavenContainer { name: 'abc', image: 'xyz' }
  */
 def call(Map parameters = [:], body) {
+
+    final defaultMavenImage = 'fabric8/maven-builder:2.2.331'
+    final defaultContainerName = 'maven'
 
     String name = parameters.get('name', defaultContainerName)
     String image = parameters.get('image', defaultMavenImage)
