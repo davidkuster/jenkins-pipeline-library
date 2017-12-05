@@ -3,8 +3,8 @@ package net.talldave.pipeline
 // Container utility functions.
 // Choosing this for simplicity over more DSL-like closures in var dir.
 
-final static defaultMavenName = 'maven'
-final static defaultMavenImage = 'fabric8/maven-builder:2.2.331'
+final defaultMavenName = 'maven'
+final defaultMavenImage = 'fabric8/maven-builder:2.2.331'
 
 /**
  * Creates a Maven container.
