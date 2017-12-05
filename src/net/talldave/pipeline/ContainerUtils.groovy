@@ -16,10 +16,13 @@ package net.talldave.pipeline
 def mavenContainer(String name = Defaults.mavenContainerName,
                    String image = Defaults.mavenContainerImage) {
     echo "creating Maven container with name [$name] and image [$image]"
-    genericContainer(
-        name,
-        image,
-        [
+    containerTemplate(
+        name: name,
+        image: image,
+        command: '/bin/sh -c',
+        args: 'cat',
+        ttyEnabled: true,
+        envVars: [
             containerEnvVar(
                 key: 'MAVEN_OPTS',
                 value: '-Duser.home=/root/')
@@ -63,13 +66,12 @@ def kubectlContainer(String name = Defaults.kubectlContainerName,
 
 
 // utility method to DRY out container templates
-def genericContainer(String name, String image, List envVars = []) {
+def genericContainer(String name, String image) {
     containerTemplate(
         name: name,
         image: image,
         command: '/bin/sh -c',
         args: 'cat',
-        ttyEnabled: true,
-        envVars: envVars
+        ttyEnabled: true
     )
 }
