@@ -13,11 +13,21 @@ package net.talldave.pipeline
  * mavenContainer(image: 'xyz')
  * mavenContainer(name: 'abc', image: 'xyz')
  */
+def mavenContainer() {
+    mavenContainer(null)
+}
 def mavenContainer(args) {
-    createContainer(
-        args?.name ?: Defaults.mavenContainerName,
-        args?.image ?: Defaults.mavenContainerImage,
-        [
+    String name = args?.name ?: Defaults.mavenContainerName
+    String image = args?.image ?: Defaults.mavenContainerImage
+
+    echo "creating container with name [$name] and image [$image]"
+    containerTemplate(
+        name: name,
+        image: image,
+        command: '/bin/sh -c',
+        args: 'cat',
+        ttyEnabled: true,
+        envVars: [
             containerEnvVar(
                 key: 'MAVEN_OPTS',
                 value: '-Duser.home=/root/')
@@ -61,14 +71,13 @@ def kubectlContainer(args) {
 
 
 // utility method to DRY out container templates
-def createContainer(String name, String image, List envVars = []) {
+def createContainer(String name, String image) {
     echo "creating container with name [$name] and image [$image]"
     containerTemplate(
         name: name,
         image: image,
         command: '/bin/sh -c',
         args: 'cat',
-        ttyEnabled: true,
-        envVars: envVars
+        ttyEnabled: true
     )
 }
