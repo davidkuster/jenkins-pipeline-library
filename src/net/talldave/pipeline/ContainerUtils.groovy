@@ -13,10 +13,7 @@ package net.talldave.pipeline
  * mavenContainer(image: 'xyz')
  * mavenContainer(name: 'abc', image: 'xyz')
  */
-def mavenContainer() {
-    mavenContainer(null)
-}
-def mavenContainer(args) {
+def mavenContainer(args = null) {
     String name = args?.name ?: Defaults.mavenContainerName
     String image = args?.image ?: Defaults.mavenContainerImage
 
@@ -46,8 +43,8 @@ def mavenContainer(args) {
  * pythonContainer(image: 'xyz')
  * pythonContainer(name: 'abc', image: 'xyz')
  */
-def pythonContainer(args) {
-    genericContainer(
+def pythonContainer(args = null) {
+    createContainer(
         args?.name ?: Defaults.pythonContainerName,
         args?.image ?: Defaults.pythonContainerImage)
 }
@@ -63,8 +60,8 @@ def pythonContainer(args) {
  * kubectlContainer(image: 'xyz')
  * kubectlContainer(name: 'abc', image: 'xyz')
  */
-def kubectlContainer(args) {
-    genericContainer(
+def kubectlContainer(args = null) {
+    createContainer(
         args?.name ?: Defaults.kubectlContainerName,
         args?.image ?: Defaults.kubectlContainerImage)
 }
