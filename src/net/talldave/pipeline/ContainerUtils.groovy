@@ -34,6 +34,23 @@ def mavenContainer(args = null) {
 
 
 /**
+ * Creates an SBT container.
+ *
+ * Usage:
+ *
+ * sbtContainer()
+ * sbtContainer(name: 'abc')
+ * sbtContainer(image: 'xyz')
+ * sbtContainer(name: 'abc', image: 'xyz')
+ */
+def sbtContainer(args = null) {
+    createContainer(
+        args?.name ?: Defaults.sbtContainerName,
+        args?.image ?: Defaults.sbtContainerImage)
+}
+
+
+/**
  * Creates a Python container.
  *
  * Usage:
